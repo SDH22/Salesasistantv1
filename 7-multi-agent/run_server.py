@@ -6,7 +6,7 @@ from manager.agent import TAX_INVOICE_REGISTRY, DELIVERY_NOTE_REGISTRY
 
 app = get_fast_api_app(
     agents_dir="C:\\Users\\Lenovo E480\\Desktop\\Codes\\adk\\7-multi-agent",
-    allow_origins=["http://localhost:8080"],
+    allow_origins=["http://localhost:8080", "https://sdh22.github.io"],
     web=True,
 )
 
