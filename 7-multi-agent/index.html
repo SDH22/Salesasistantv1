@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steel Wood Industries — Sales Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Subtle accent overlay (complements the photo BG) ── -->
+<svg class="bg-canvas" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <radialGradient id="vig" cx="50%" cy="50%" r="70%">
+    <stop offset="0%"   stop-color="transparent"/>
+    <stop offset="100%" stop-color="#030608" stop-opacity="0.55"/>
+  </radialGradient>
+  <rect width="1440" height="900" fill="url(#vig)"/>
+  <radialGradient id="cyanCorner" cx="100%" cy="0%" r="50%">
+    <stop offset="0%"   stop-color="#4ECDC4" stop-opacity="0.07"/>
+    <stop offset="100%" stop-color="transparent"/>
+  </radialGradient>
+  <rect width="1440" height="900" fill="url(#cyanCorner)"/>
+  <g>
+    <circle cx="1310" cy="395" r="1" fill="#4ECDC4" opacity="0.3">
+      <animate attributeName="opacity" values="0.3;0.9;0.3" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="255" cy="345" r="0.8" fill="#4ECDC4" opacity="0.25">
+      <animate attributeName="opacity" values="0.25;0.85;0.25" dur="5.5s" begin="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="680" cy="820" r="0.9" fill="#4ECDC4" opacity="0.2">
+      <animate attributeName="opacity" values="0.2;0.7;0.2" dur="4s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<div class="shell">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+
+    <div class="brand">
+      <div class="brand-icon">🌲</div>
+      <div class="brand-name">Steel Wood Industries</div>
+      <div class="brand-sub">FZCO · Dubai</div>
+    </div>
+
+    <div class="sidebar-section">Chipboard Range</div>
+    <div class="product-list" id="productList">
+
+      <div class="cat-header" onclick="toggleCat(this)">
+        <div class="cat-header-left"><span class="cat-icon">🔥</span> Fire Rated</div>
+        <span class="cat-arrow">▶</span>
+      </div>
+      <div class="cat-body" id="cat-fire"></div>
+
+      <div class="cat-header" onclick="toggleCat(this)">
+        <div class="cat-header-left"><span class="cat-icon">📦</span> Non Fire Rated</div>
+        <span class="cat-arrow">▶</span>
+      </div>
+      <div class="cat-body" id="cat-nonfr"></div>
+
+      <div class="cat-header" onclick="toggleCat(this)">
+        <div class="cat-header-left"><span class="cat-icon">💧</span> Moisture Rated</div>
+        <span class="cat-arrow">▶</span>
+      </div>
+      <div class="cat-body" id="cat-moist"></div>
+
+      <div class="cat-header" onclick="toggleCat(this)">
+        <div class="cat-header-left"><span class="cat-icon">🔊</span> Acoustic Chipboard</div>
+        <span class="cat-arrow">▶</span>
+      </div>
+      <div class="cat-body" id="cat-acoustic"></div>
+
+    </div>
+
+    <div class="sidebar-section" style="margin-top:2px">Documents</div>
+    <div class="doc-shortcuts">
+      <button class="doc-shortcut-btn" onclick="initLookup('invoice')">🧾 Tax Invoice</button>
+      <button class="doc-shortcut-btn" onclick="initLookup('delivery')">🚚 Delivery Note</button>
+    </div>
+
+    <div class="quick-actions">
+      <button class="quick-btn" onclick="sendSuggestion('Show me the TDS for all Chipboard categories')">
+        📄 TDS Documents
+      </button>
+      <button class="quick-btn" onclick="sendSuggestion('Share test reports for Chipboard')">
+        🧪 Test Reports
+      </button>
+      <button class="quick-btn" onclick="newSession()">✦ New Session</button>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="status-dot" id="statusDot">Connecting...</div>
+    </div>
+  </aside>
+
+  <!-- ── Main chat area ── -->
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+        <button class="hamburger" id="hamburger" onclick="openSidebar()" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="topbar-left">
+          <div class="topbar-title">Sales Assistant</div>
+          <div class="topbar-sub">Powered by Steel Wood AI</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" title="New session" onclick="newSession()">↺</button>
+        <button class="icon-btn" title="Email us" onclick="window.open('mailto:sales@steelwood.ae')">✉</button>
+      </div>
+    </div>
+
+    <div class="messages" id="messages">
+      <div class="welcome" id="welcome">
+        <div class="welcome-icon">🪵</div>
+        <div class="welcome-title">How can I help you<br><em>with Chipboard today?</em></div>
+        <div class="welcome-sub">Ask about TDS, test reports, tax invoices, delivery notes, or product specs across Fire Rated, Non Fire Rated &amp; Moisture Rated ranges.</div>
+        <div class="suggestion-grid">
+          <div class="suggestion" onclick="sendSuggestion('Share the TDS for 18mm Fire Rated Chipboard')">
+            <span class="suggestion-icon">📄</span>
+            <span class="suggestion-text">TDS — 18mm Fire Rated Chipboard</span>
+          </div>
+          <div class="suggestion" onclick="sendSuggestion('Show test reports for Moisture Rated Chipboard')">
+            <span class="suggestion-icon">🧪</span>
+            <span class="suggestion-text">Test Reports — Moisture Rated</span>
+          </div>
+          <div class="suggestion" onclick="initLookup('invoice')">
+            <span class="suggestion-icon">🧾</span>
+            <span class="suggestion-text">Retrieve a Tax Invoice</span>
+          </div>
+          <div class="suggestion" onclick="initLookup('delivery')">
+            <span class="suggestion-icon">🚚</span>
+            <span class="suggestion-text">Retrieve a Delivery Note</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-wrapper">
+        <textarea
+          id="input"
+          placeholder="Ask about TDS, test reports, invoices, delivery notes..."
+          rows="1"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+      </div>
+      <div class="input-hint">Enter to send · Shift+Enter for new line</div>
+    </div>
+  </main>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
